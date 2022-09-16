@@ -9,7 +9,7 @@ jobs:
   build:
     env:
       CI: true #make escape from watch mode in react (inbuilt)
-      MONGO_URL: mongo://localhost/nasa
+      MONGO_URL: mongodb://localhost/nasa
     strategy:
       matrix:
         node-version: [ 14.x, 16.x]
