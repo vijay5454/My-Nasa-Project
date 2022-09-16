@@ -1,0 +1,29 @@
+name: My-Nasa-Project-API
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    env:
+      CI: true #make escape from watch mode in react (inbuilt)
+      MONGO_URL: mongo:localhost/nasa
+    strategy:
+      matrix:
+        node-version: [ 14.x, 16.x]
+        mongo-version: [ '4.4' ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use node.js version ${{matrix.node-version}}
+      uses: actions/setup-node@v2
+      with: 
+        node-version: ${{matrix.node-version}}
+    - name: MongoDB connection for test
+      uses: supercharge/mongodb-github-action@1.8.0
+      with:
+        mongo-version: ${{matrix.mongo-version}}
+    - run: npm install
+    - run: npm test
